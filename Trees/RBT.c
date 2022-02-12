@@ -43,10 +43,10 @@ int main() {
     treeInsert(&RB, 8);
     treeInsert(&RB, 4);
 
+    printf("\n----- IN ORDER WALK -----\n");
+    inOrderWalk(&RB, RB.root);
+    printf("\n");
 
-    // treeInsert(&RB, 5);
-    // treeInsert(&RB, 6);
-    // treeInsert(&RB, 7);
     treeNodePtr res = treeSearch(&RB, 8);
     treeDelete(&RB, res);
 
@@ -166,7 +166,7 @@ treeNodePtr treeSearch(RBTPtr RP, int k) {
 
     while (trav != NULL) {
 
-        if (trav->key = k) {
+        if (trav->key == k) {
             printf("%d in list\n", k);
             return trav;
         } else if (trav->key > k) {
@@ -396,7 +396,6 @@ void treeInsertFixup(RBTPtr RP, treeNodePtr TP) {
    RP->root->color = 'B';
 }
 
-// TROUBLE: Sometimes deletes node at root and replaces w/ node we want to delete
 // Delete a node from an RBT
 void treeDelete(RBTPtr RP, treeNodePtr TP) {
     // RP = RBT we want to delete from
@@ -416,16 +415,19 @@ void treeDelete(RBTPtr RP, treeNodePtr TP) {
 
     // If TP has no left child, its right child replaces it
     if (TP->left == RP->nil) {
-        newTPchild = newTP->right;
+        printf("Left child is empty!\n");
+        newTPchild = TP->right;
         transplant(RP, TP, TP->right);
     } 
     // If TP has no right child, its left child replaces lit
     else if (TP->right == RP->nil) {
-        newTPchild = newTP->left;
+        printf("Right child is empty!\n");
+        newTPchild = TP->left;
         transplant(RP, TP, TP->left);
     } 
     // If TP has two children, its successor replaces it
     else {
+        printf("Node has two kids\n");
 
         // Reinitialize newTP, newTPcol, and newTPchild
         newTP = treeMin(RP, TP->right);
