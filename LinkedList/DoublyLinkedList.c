@@ -61,14 +61,14 @@ void listDelete(LinkedListPtr LP, int k) {
     NodePtr x = listSearch(LP, k);
     
     if (x != NULL) {
+        if (x->next != NULL) {
+            x->next->prev = x->prev;
+        }
+        
         if (x->prev != NULL) {
             x->prev->next = x->next;
         } else {
             LP->head = x->next;
-        }
-
-        if (x->next != NULL) {
-            x->next->prev = x->prev;
         }
     }
 }
